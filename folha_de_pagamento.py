@@ -29,7 +29,6 @@ for indice,descricao in enumerate(df['Descrição']):
     data2 = df.loc[indice,"Data 2"]
     valor1 = df.loc[indice,"Valor 1"]
     valor2 = df.loc[indice,"Valor 2"]
-    soma = df.loc[indice,"Soma"]
     time.sleep(10)
 
     #Link do Contas a Pagar 
@@ -61,8 +60,6 @@ for indice,descricao in enumerate(df['Descrição']):
     salario.clear()
     salario.send_keys(str(valor1+valor2).replace('.',','))
     time.sleep(6)
-    print(soma)
-    print(str(soma).replace('.',','))
 
     date1 = driver.find_element(By.CSS_SELECTOR, '#Data_Vencimento1')
     date1.clear()
@@ -85,4 +82,6 @@ for indice,descricao in enumerate(df['Descrição']):
 
     time.sleep(7)
     salvar = driver.find_element(By.CSS_SELECTOR, "#btnSubmit").click()
+
+print('Lançamento Concluído com Sucesso!')
 
