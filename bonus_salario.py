@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from sabados import get_saturdays
+from uteis import get_saturdays
 from ambiente import get_variable
 
 sabados = get_saturdays()

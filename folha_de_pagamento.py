@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from ambiente import get_variable
+from uteis import get_month
 
 df = pd.read_excel(get_variable("PLANILHA"))
 
