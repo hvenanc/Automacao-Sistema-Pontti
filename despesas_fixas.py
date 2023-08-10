@@ -4,20 +4,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from uteis import get_saturdays
 from ambiente import get_variable
 
 inicio = time.time()
-sabados = get_saturdays()
-tipo_pag = ''
-
-if len(sabados) == 5:
-    tipo_pag = "BONUS SALARIO - 5 SEMANAS"
-else:
-    tipo_pag = "BONUS SALARIO 7/14/21/28"
     
 
-df = pd.read_excel(get_variable("PLANILHA_SABADOS"))
+df = pd.read_excel(get_variable("PLANILHA_DESPESAS_FIXAS"))
 
 driver = webdriver.Edge()
 driver.get(get_variable("EMPRESA"))
@@ -34,9 +26,12 @@ contas = driver.find_element(By.CSS_SELECTOR, "#pagar > a:nth-child(1) > img:nth
 
 for indice,descricao in enumerate(df['Descrição']):
     time.sleep(10)
+    descr = df.loc[indice,"Descrição"]
     forne = df.loc[indice,"Fornecedor"]
     atividade = df.loc[indice,"Atividade"]
-    valor = df.loc[indice,"valor"]
+    data = df.loc[indice,"Data"]
+    valor = df.loc[indice,"Valor"]
+    tipo_pag = df.loc[indice,"Tipo"]
     time.sleep(10)
 
     #Link do Contas a Pagar 
@@ -66,56 +61,18 @@ for indice,descricao in enumerate(df['Descrição']):
 
     salario = driver.find_element(By.CSS_SELECTOR,'#Valor_Original')
     salario.clear()
-    salario.send_keys(str(valor * len(sabados)))
+    salario.send_keys(valor)
     time.sleep(6)
 
     date1 = driver.find_element(By.CSS_SELECTOR, '#Data_Vencimento1')
     date1.clear()
-    date1.send_keys(str(sabados[0]))
+    date1.send_keys(str(data) + "/08/2023")
     time.sleep(5)
 
     salario1 = driver.find_element(By.CSS_SELECTOR,'#Valor_Original1')
     salario1.clear()
-    salario1.send_keys(str(valor).replace('.',','))
+    salario1.send_keys(valor)
     time.sleep(5)
-
-    date2 = driver.find_element(By.CSS_SELECTOR, '#Data_Vencimento2')
-    date2.clear()
-    date2.send_keys(str(sabados[1]))
-    time.sleep(5)
-
-    salario2 = driver.find_element(By.CSS_SELECTOR,'#Valor_Original2')
-    salario2.clear()
-    salario2.send_keys(str(valor).replace('.',','))
-
-    date3 = driver.find_element(By.CSS_SELECTOR, '#Data_Vencimento3')
-    date3.clear()
-    date3.send_keys(str(sabados[2]))
-    time.sleep(5)
-
-    salario3 = driver.find_element(By.CSS_SELECTOR,'#Valor_Original3')
-    salario3.clear()
-    salario3.send_keys(str(valor).replace('.',','))
-
-    date4 = driver.find_element(By.CSS_SELECTOR, '#Data_Vencimento4')
-    date4.clear()
-    date4.send_keys(str(sabados[3]))
-    time.sleep(5)
-
-    salario4 = driver.find_element(By.CSS_SELECTOR,'#Valor_Original4')
-    salario4.clear()
-    salario4.send_keys(str(valor).replace('.',','))
-
-    if len(sabados) == 5:
-
-        date5 = driver.find_element(By.CSS_SELECTOR, '#Data_Vencimento5')
-        date5.clear()
-        date5.send_keys(str(sabados[4]))
-        time.sleep(5)
-
-        salario5 = driver.find_element(By.CSS_SELECTOR,'#Valor_Original5')
-        salario5.clear()
-        salario5.send_keys(str(valor).replace('.',','))
 
     time.sleep(7)
     salvar = driver.find_element(By.CSS_SELECTOR, "#btnSubmit").click()

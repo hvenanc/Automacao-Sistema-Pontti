@@ -7,9 +7,10 @@ from dotenv import load_dotenv
 from ambiente import get_variable
 
 load_dotenv()
+inicio = time.time()
 
 # Planilha com produtos
-df = pd.read_excel(get_variable("PLANILHA"))
+df = pd.read_excel(get_variable("PLANILHA_INVENTARIO"))
 
 driver = webdriver.Firefox()
 driver.get(get_variable("LINK_PORTAL"))
@@ -44,3 +45,7 @@ for i, codigo in enumerate(df['Código']):
 
 time.sleep(5)
 elem = driver.find_element(By.CSS_SELECTOR, "button.bt_cadastro:nth-child(6)").click()
+
+print('Lançamento Concluído com Sucesso!')
+fim = time.time()
+print(fim - inicio)

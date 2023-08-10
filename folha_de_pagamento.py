@@ -8,7 +8,8 @@ from selenium.webdriver.support.ui import Select
 from ambiente import get_variable
 from uteis import get_month
 
-df = pd.read_excel(get_variable("PLANILHA"))
+inicio = time.time()
+df = pd.read_excel(get_variable("PLANILHA_FOLHA"))
 
 driver = webdriver.Firefox()
 driver.get(get_variable("EMPRESA"))
@@ -85,4 +86,6 @@ for indice,descricao in enumerate(df['Descrição']):
     salvar = driver.find_element(By.CSS_SELECTOR, "#btnSubmit").click()
 
 print('Lançamento Concluído com Sucesso!')
+fim = time.time()
+print(fim - inicio)
 
